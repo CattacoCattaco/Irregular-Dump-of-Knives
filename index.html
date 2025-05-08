@@ -11,22 +11,29 @@
 <body>
   <div class="top-bar" id="top-bar">
   </div>
-  <form class="settings" id="settings" hidden="true">
-    <button type="button" onclick="closeSettings()" id="close-settings-button" class="close-settings-button">
-      X
-    </button>
-    <button type="button" onclick="saveToFile()" id="save-to-file-button" class="save-to-file-button">
-      Save to file
-    </button><br><br>
-    <input type="file" id="file-input" accept=".txt" />
-    <button type="button" onclick="loadFromFile()" id="load-from-file-button" class="load-from-file-button">
-      Load from file
-    </button>
-  </form>
+  <div class="settings-parent" id="settings-parent" hidden="true">
+    <div class="settings-top-bar" id="settings-top-bar">
+      <p class="settings-label" id="settings-label">
+        Settings
+      </p>
+      <button type="button" onmouseup="closeSettings()" id="close-settings-button" class="close-settings-button">
+        X
+      </button>
+    </div>
+    <form class="settings" id="settings">
+      <button type="button" onmouseup="saveToFile()" id="save-to-file-button" class="save-to-file-button">
+        Save to file
+      </button><br><br>
+      <input type="file" id="file-input" accept=".txt" />
+      <button type="button" onmouseup="loadFromFile()" id="load-from-file-button" class="load-from-file-button">
+        Load from file
+      </button>
+    </form>
+  </div>
   <div class="half-div-holder" id="half-div-holder">
     <div class="half-div" id="button-area">
       <div class="button-container">
-        <button type="button" onclick="makeButton()">
+        <button type="button" onmouseup="makeButton()">
           Make me a button
         </button>
       </div>
@@ -34,6 +41,7 @@
     <div class="half-div" id="randomness-area">
     </div>
   </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
   <script src="script.js"></script>
 </body>
 

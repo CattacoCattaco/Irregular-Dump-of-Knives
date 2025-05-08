@@ -63,29 +63,59 @@ button, input::file-selector-button {
   overflow: auto;
 }
 
-.settings[hidden = "true"] {
+.settings-parent[hidden = "true"] {
   display: none;
+}
+
+.settings-parent {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: clip;
+  border-width: 1vh;
+  border: solid #555;
+  background-color: rgb(190,230,250);
+  height: 80vh;
+  width: 80vh;
+  position: absolute;
+  top: 10vh;
+  left: calc((100vw - 80vh) / 2);
 }
 
 .settings {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  overflow: auto;
+  overflow: visible;
   justify-content: flex-start;
   align-content: flex-start;
-  border-width: 2px;
-  border-color: var(--text-color);
-  background-color: rgb(190,230,250);
-  height: 80%;
-  width: 80%;
+  height: 69vh;
+  width: 78vh;
   position: absolute;
-  left: 10%;
-  top: 10%;
+  top: 9vh;
+  left: 1vh;
+}
+
+.settings-top-bar {
+  background-color: rgb(150, 190, 210);
+  border-bottom: 0.5vh solid #555;
+  height: 7vh;
+  width: 80vh;
+  position: absolute;
+  top: 0vh;
+  left: 0vh;
 }
 
 .close-settings-button {
   position: absolute;
-  right: 1%;
-  top: 1%;
+  height: 5vh;
+  width: 5vh;
+  text-align: center;
+  text-justify: center;
+  top: 1vh;
+  right: 1vh;
+}
+
+.settings-label {
+  position: absolute;
+  left: 1vh;
 }
