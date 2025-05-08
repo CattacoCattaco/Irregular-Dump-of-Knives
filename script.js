@@ -39,9 +39,9 @@ var rpsMatchups = [
   ["scissors", "scissors", 0],
 ]
 
-var rps_win_count = 0
-var rps_loss_count = 0
-var rps_tie_count = 0
+var rpsWinCount = 0
+var rpsLossCount = 0
+var rpsTieCount = 0
 
 //The first level of inner arrays are the levels
 //The levels each contain the data of the buttons that are unlocked at that level
@@ -55,7 +55,7 @@ var randomButtonLevels = [
     ["Do nothing", function() {}],
     ["Make me an egg", function() {makeEgg()}],
     ["Make me a square", function() {makeSquare()}],
-  ],
+  ], //Level 0
   [
     ["Change text color", function() {changeTextColor()}],
     ["Make seven buttons", function() {for(i = 0; i < 7; i++){makeButton()}}],
@@ -64,7 +64,7 @@ var randomButtonLevels = [
     ["Make me a name", function() {makeName()}],
     ["Make me a triangle", function() {makeTriangle()}],
     ["What are eggs?", function() {defineEgg()}],
-  ],
+  ], //Level 1
   [
     ["Change button color", function() {changeButtonColor()}],
     ["Change button text color", function() {changeButtonTextColor()}],
@@ -72,8 +72,7 @@ var randomButtonLevels = [
     ["Make five names", function() {for(i = 0; i < 5; i++){makeName()}}],
     ["Choose rock, paper, or scissors five times", function() {for(i = 0; i < 5; i++){makeRps()}}],
     ["Make me a line", function() {makeLine()}],
-    
-  ],
+  ], //Level 2
   [
     ["Change ominous color", function() {changeOminousColor()}],
     ["Make 20 buttons", function() {for(i = 0; i < 20; i++){makeButton()}}],
@@ -81,14 +80,49 @@ var randomButtonLevels = [
     ["Make me a polygon", function() {makePolygon()}],
     ["Play 10 games of RPS", function() {for(i = 0; i < 10; i++){playRps()}}],
     ["Make 14 words", function() {for(i = 0; i < 14; i++){makeText()}}],
-  ],
+  ], //Level 3
   [
     ["Make me a shape button", function() {makeShapeButton()}],
     ["Name an egg", function() {nameEgg()}],
-  ],
+  ], //Level 4
   [
-    ["R e s e t", function() {reset()}, true],
-  ]
+    ["R  e  s  e  t", function() {reset()}, true],
+  ], //Level 5
+  [
+    ["Name a dozen eggs", function() {for(i = 0; i < 12; i++){nameEgg()}}],
+    ["The warnings", function() {theWarnings()}, true],
+  ], //Level 6
+  [
+    ["Make 100 buttons", function() {for(i = 0; i < 100; i++){makeButton()}}],
+    ["I kept going", function() {keptGoing()}, true],
+  ], //Level 7
+  [
+    ["Make many lines", function() {for(i = 0; i < Math.ceil(Math.random() * 300); i++){makeLine()}}],
+    ["Why?", function() {why()}, true],
+  ], //Level 8
+  [
+    ["Make a dozen eggs", function() {for(i = 0; i < 12; i++){makeEgg()}}],
+    ["Name three dozen eggs", function() {for(i = 0; i < 36; i++){nameEgg()}}],
+    ["Make 2 buttons", function() {for(i = 0; i < 2; i++){makeButton()}}],
+    ["Make 39 buttons annoyingly", function() {for(i = 0; i < 39; i++){makeButton(); window.alert("Hi!"); window.alert("Are we there yet?");}}],
+    ["Make me five shape buttons", function() {for(i = 0; i < 5; i++){makeShapeButton()}}],
+    ["Make 13 words", function() {for(i = 0; i < 13; i++){makeText()}}],
+    ["Make me a name", function() {makeName()}],
+    ["Play RPS", function() {playRps()}],
+    ["Play 100 games of RPS", function() {for(i = 0; i < 100; i++){playRps()}}],
+    ["Choose rock, paper, or scissors four times", function() {for(i = 0; i < 4; i++){makeRps()}}],
+    ["Make me a button ", function() {makeButton()}, true],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+    ["Do nothing", function() {}],
+  ], //Level 9
 ];
 //All buttons that have been unlocked so far
 var unlockedButtons = [];
@@ -123,6 +157,14 @@ var collectedEggs = []
 //Same as array above but without the rarities
 var collectedEggNames = []
 
+var hasReset = false
+
+var warningsTexts = ["I", "asked", "if you", "wanted to keep going", "I", "checked", "if you were sure", "You said you were", "Was it", "true", "?", "Was I", "wrong", "to have", "let you", "?", "Were you", "wrong", "to have", "gone", "?", "The past", "wasn't meant", "for you", "The present", "was meant", "for you", "But here we are"]
+var goingTexts = ["You", "left", "You", "went", "to the", "past", "You", "let go", "of", "all that you had", "in the", "present", "The", "present", "fell", "apart", "so you", "could", "see the", "past", "You", "are", "destruction", "But", "your", "choices", "weren't", "solely", "yours"]
+var whyTexts = ["Why", "did", "you", "do", "it", "?", "Was", "it", "for", "fame", "?", "Glory", "?", "Power", "?", "Knowledge", "?", "Chaos", "?", "No reason", "at all", "?", "Was", "it", "worth", "the", "cost", "?"]
+
+var the_speech = "I asked if you wanted to keep going. I checked if you were sure. You said you were. Was it true? Was I wrong to have let you? Were you wrong to have gone? The past wasn't meant for you. The present was meant for you. But here we are.\nYou left. You went to the past. You let go of all that you had in the present. The present fell apart so you could see the past. You are destruction. But your choices weren't solely yours.\nWhy did you do it? Was it for fame? Glory? Power? Knowledge? Chaos? No reason at all? Was it worth the cost?\nI will never forget what you did. And hopefully, neither will you. You tore my reality to shreds so I should do the same to yours. Eye for an eye. But no, that would be too easy. Take this as your punishment instead."
+
 var buttonsMade = []
 var createdButtonCount = 0
 var createdTextCount = 0
@@ -132,11 +174,13 @@ const root = document.querySelector(':root');
 
 const topBar = document.getElementById("top-bar");
 
+var levelLabel
 var buttonsMadeLabel
 var textMadeLabel
 var buttonTypesMadeLabel
 var rpsWLTCountsLabel
 var eggCollectionLabel
+var hasResetLabel
 
 const settingsParent = document.getElementById("settings-parent");
 
@@ -181,7 +225,8 @@ const used_ls_keys = [
   "IDoK_text_color",
   "IDoK_button_color",
   "IDoK_button_text_color",
-  "IDoK_ominous_color"
+  "IDoK_ominous_color",
+  "IDoK_has_reset",
 ]
 
 var loaded = false
@@ -198,6 +243,12 @@ function newLevel(ascending = true, noButtons = false)
   root.style.setProperty('--button-text-color', defaultButtonTextColor);
   root.style.setProperty('--ominous-color', defaultOminousColor);
 
+  if(currentLevel == 9)
+  {
+    window.alert(the_speech)
+    unlockedButtons = [];
+  }
+
   for(var i in randomButtonLevels[currentLevel])
   {
     unlockedButtons.push(randomButtonLevels[currentLevel][i]);
@@ -208,9 +259,9 @@ function newLevel(ascending = true, noButtons = false)
   createdTextCount = 0;
   buttonTypesMade = [];
 
-  rps_loss_count = 0;
-  rps_tie_count = 0;
-  rps_win_count = 0;
+  rpsLossCount = 0;
+  rpsTieCount = 0;
+  rpsWinCount = 0;
   
   collectedEggs = [];
   collectedEggNames = [];
@@ -254,15 +305,20 @@ function reset()
       {
         localStorage.removeItem(used_ls_keys[i]);
       }
+
+      hasReset = true;
+      unlockedButtons = [];
+      currentLevel = 0;
       newLevel();
+
       setTimeout(
         function() 
         {
           window.alert("You were warned.")
           window.alert("But you kept going.")
           window.alert("Why?")
-        }
-      , 2000)
+        }, 200
+      )
     }
   }
 }
@@ -284,9 +340,9 @@ function saveToBrowser()
   localStorage.setItem("IDoK_button_types_made", JSON.stringify(buttonTypesMade));
   localStorage.setItem("IDoK_random_area_contents", randomArea.innerHTML);
 
-  localStorage.setItem("IDoK_rps_wins", JSON.stringify(rps_win_count));
-  localStorage.setItem("IDoK_rps_ties", JSON.stringify(rps_tie_count));
-  localStorage.setItem("IDoK_rps_losses", JSON.stringify(rps_loss_count));
+  localStorage.setItem("IDoK_rps_wins", JSON.stringify(rpsWinCount));
+  localStorage.setItem("IDoK_rps_ties", JSON.stringify(rpsTieCount));
+  localStorage.setItem("IDoK_rps_losses", JSON.stringify(rpsLossCount));
 
   localStorage.setItem("IDoK_custom_eggs", JSON.stringify(customEggs));
   localStorage.setItem("IDoK_collected_eggs", JSON.stringify(collectedEggs));
@@ -297,6 +353,8 @@ function saveToBrowser()
   localStorage.setItem("IDoK_button_color", root.style.getPropertyValue('--button-color'));
   localStorage.setItem("IDoK_button_text_color", root.style.getPropertyValue('--button-text-color'));
   localStorage.setItem("IDoK_ominous_color", root.style.getPropertyValue('--ominous-color'));
+
+  localStorage.setItem("IDoK_has_reset", JSON.stringify(hasReset));
 }
 
 function loadFromBrowser()
@@ -363,19 +421,21 @@ function loadFromBrowser()
   buttonTypesMade = JSON.parse(localStorage.getItem("IDoK_button_types_made"));
   randomArea.innerHTML = localStorage.getItem("IDoK_random_area_contents");
 
-  rps_win_count = JSON.parse(localStorage.getItem("IDoK_rps_wins", JSON.stringify()));
-  rps_tie_count = JSON.parse(localStorage.getItem("IDoK_rps_ties", JSON.stringify()));
-  rps_loss_count = JSON.parse(localStorage.getItem("IDoK_rps_losses", JSON.stringify()));
+  rpsWinCount = JSON.parse(localStorage.getItem("IDoK_rps_wins"));
+  rpsTieCount = JSON.parse(localStorage.getItem("IDoK_rps_ties"));
+  rpsLossCount = JSON.parse(localStorage.getItem("IDoK_rps_losses"));
 
-  customEggs = JSON.parse(localStorage.getItem("IDoK_custom_eggs", JSON.stringify()));
-  collectedEggs = JSON.parse(localStorage.getItem("IDoK_collected_eggs", JSON.stringify()));
-  collectedEggNames = JSON.parse(localStorage.getItem("IDoK_collected_egg_names", JSON.stringify()));
+  customEggs = JSON.parse(localStorage.getItem("IDoK_custom_eggs"));
+  collectedEggs = JSON.parse(localStorage.getItem("IDoK_collected_eggs"));
+  collectedEggNames = JSON.parse(localStorage.getItem("IDoK_collected_egg_names"));
 
   root.style.setProperty('--background-color', localStorage.getItem("IDoK_background_color"));
   root.style.setProperty('--text-color', localStorage.getItem("IDoK_text_color"));
   root.style.setProperty('--button-color', localStorage.getItem("IDoK_button_color"));
   root.style.setProperty('--button-text-color', localStorage.getItem("IDoK_button_text_color"));
   root.style.setProperty('--ominous-color', localStorage.getItem("IDoK_ominous_color"));
+  
+  hasReset = JSON.parse(localStorage.getItem("IDoK_has_reset"));
 
   updateTopBarElements();
 
@@ -400,9 +460,9 @@ function saveToFile()
       JSON.stringify(createdTextCount) + "\n" +
       JSON.stringify(buttonTypesMade) + "\n" +
       randomArea.innerHTML + "\n" +
-      JSON.stringify(rps_win_count) + "\n" +
-      JSON.stringify(rps_tie_count) + "\n" +
-      JSON.stringify(rps_loss_count) + "\n" +
+      JSON.stringify(rpsWinCount) + "\n" +
+      JSON.stringify(rpsTieCount) + "\n" +
+      JSON.stringify(rpsLossCount) + "\n" +
       JSON.stringify(customEggs) + "\n" +
       JSON.stringify(collectedEggs) + "\n" +
       JSON.stringify(collectedEggNames) + "\n" +
@@ -410,7 +470,8 @@ function saveToFile()
       root.style.getPropertyValue('--text-color') + "\n" +
       root.style.getPropertyValue('--button-color') + "\n" +
       root.style.getPropertyValue('--button-text-color') + "\n" +
-      root.style.getPropertyValue('--ominous-color')
+      root.style.getPropertyValue('--ominous-color') + "\n" +
+      JSON.stringify(hasReset)
   );
 
   // Write data in 'Irregular_dump_of_knives_save.txt'
@@ -480,9 +541,9 @@ function loadFromFile()
     buttonTypesMade = JSON.parse(data[4]);
     randomArea.innerHTML = data[5];
 
-    rps_win_count = JSON.parse(data[6]);
-    rps_tie_count = JSON.parse(data[7]);
-    rps_loss_count = JSON.parse(data[8]);
+    rpsWinCount = JSON.parse(data[6]);
+    rpsTieCount = JSON.parse(data[7]);
+    rpsLossCount = JSON.parse(data[8]);
 
     customEggs = JSON.parse(data[9]);
     collectedEggs = JSON.parse(data[10]);
@@ -493,6 +554,8 @@ function loadFromFile()
     root.style.setProperty('--button-color', data[14]);
     root.style.setProperty('--button-text-color', data[15]);
     root.style.setProperty('--ominous-color', data[16]);
+
+    hasReset = JSON.parse(data[17] || false)
 
     updateTopBarElements();
     
@@ -516,6 +579,12 @@ function updateTopBarElements()
 {
   topBar.innerHTML = ""
 
+  if(currentLevel >= 1)
+  {
+    levelLabel = document.createElement("p");
+    topBar.appendChild(levelLabel);
+  }
+
   buttonsMadeLabel = document.createElement("p");
   topBar.appendChild(buttonsMadeLabel);
 
@@ -537,6 +606,12 @@ function updateTopBarElements()
     topBar.appendChild(eggCollectionLabel);
   }
 
+  if(currentLevel >= 5)
+  {
+    hasResetLabel = document.createElement("p");
+    topBar.appendChild(hasResetLabel);
+  }
+
   var button = document.createElement("button");
   
   button.type = "button";
@@ -548,6 +623,12 @@ function updateTopBarElements()
 
 function updateTopBar()
 {
+  if(currentLevel >= 1)
+  {
+    levelLabel.innerHTML = "Level: " + currentLevel
+    levelLabel.style.color = "var(--ominous-color)"
+  }
+
   buttonsMadeLabel.innerHTML = "Buttons made: " + createdButtonCount
   if(enoughButtonsMade())
   {
@@ -586,7 +667,7 @@ function updateTopBar()
 
   if(currentLevel >= 1)
   {
-    rpsWLTCountsLabel.innerHTML = "RPS: Wins = " + rps_win_count + ", Ties = " + rps_tie_count + ", Losses = " + rps_loss_count
+    rpsWLTCountsLabel.innerHTML = "RPS: Wins = " + rpsWinCount + ", Ties = " + rpsTieCount + ", Losses = " + rpsLossCount
     if(playedEnoughRPS())
     {
       rpsWLTCountsLabel.style.color = "var(--ominous-color)"
@@ -611,6 +692,20 @@ function updateTopBar()
     else
     {
       eggCollectionLabel.style.color = "var(--text-color)"
+    }
+  }
+
+  if(currentLevel >= 5)
+  {
+    if(hasReset)
+    {
+      hasResetLabel.innerHTML = "Looked to the past"
+      hasResetLabel.style.color = "var(--ominous-color)"
+    }
+    else
+    {
+      hasResetLabel.innerHTML = "Stuck in the present"
+      hasResetLabel.style.color = "var(--text-color)"
     }
   }
 
@@ -677,7 +772,7 @@ function makeButton(buttonToMake = null)
 
 function canAscend()
 {
-  return enoughButtonsMade() && enoughTextMade() && allButtonTypesMade() && playedEnoughRPS() && (enoughEggsCollected() || currentLevel < 2)
+  return enoughButtonsMade() && enoughTextMade() && allButtonTypesMade() && playedEnoughRPS() && (enoughEggsCollected() || currentLevel < 2) && (hasReset || currentLevel < 5)
 }
 
 function enoughButtonsMade()
@@ -697,7 +792,7 @@ function allButtonTypesMade()
 
 function playedEnoughRPS()
 {
-  return rps_loss_count + rps_tie_count + rps_win_count >= 5 * (currentLevel ** 1.6)
+  return rpsLossCount + rpsTieCount + rpsWinCount >= 5 * (currentLevel ** 1.6)
 }
 
 function enoughEggsCollected()
@@ -705,7 +800,7 @@ function enoughEggsCollected()
   var allNormalEggsCollected = collectedEggCount(0) == commonEggs.length && collectedEggCount(1) == uncommonEggs.length && collectedEggCount(2) == rareEggs.length && collectedEggCount(3) == mythicEggs.length
   if(currentLevel >= 4)
   {
-    return allNormalEggsCollected && collectedEggCount(4) >= customEggs.length && customEggs.length > currentLevel
+    return allNormalEggsCollected && collectedEggCount(4) >= customEggs.length && collectedEggCount(4) > currentLevel
   }
   else
   {
@@ -891,15 +986,15 @@ function playRps()
   switch(result)
   {
     case 0:
-      rps_tie_count += 1;
+      rpsTieCount += 1;
       window.alert("It's a tie!")
       break;
     case 1:
-      rps_win_count += 1;
+      rpsWinCount += 1;
       window.alert("You win!")
       break;
     case -1:
-      rps_loss_count += 1;
+      rpsLossCount += 1;
       window.alert("I win!")
       break;
   }
@@ -1150,4 +1245,49 @@ function makePolygon()
 function makeShapeButton()
 {
   makeButton(shapeButtons[Math.floor(Math.random() * shapeButtons.length)])
+}
+
+function theWarnings()
+{
+  var p = document.createElement("p");
+  p.innerHTML = warningsTexts[Math.floor(Math.random() * warningsTexts.length)];
+  p.style.color = "var(--ominous-color)"
+  randomArea.appendChild(p);
+
+  createdTextCount += 1;
+
+  if(loaded)
+  {
+    updateTopBar();
+  }
+}
+
+function keptGoing()
+{
+  var p = document.createElement("p");
+  p.innerHTML = goingTexts[Math.floor(Math.random() * goingTexts.length)];
+  p.style.color = "var(--ominous-color)"
+  randomArea.appendChild(p);
+
+  createdTextCount += 1;
+
+  if(loaded)
+  {
+    updateTopBar();
+  }
+}
+
+function why()
+{
+  var p = document.createElement("p");
+  p.innerHTML = whyTexts[Math.floor(Math.random() * whyTexts.length)];
+  p.style.color = "var(--ominous-color)"
+  randomArea.appendChild(p);
+
+  createdTextCount += 1;
+
+  if(loaded)
+  {
+    updateTopBar();
+  }
 }
