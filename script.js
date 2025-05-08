@@ -255,9 +255,14 @@ function reset()
         localStorage.removeItem(used_ls_keys[i]);
       }
       newLevel();
-      window.alert("You were warned.")
-      window.alert("But you kept going.")
-      window.alert("Why?")
+      setTimeout(
+        function() 
+        {
+          window.alert("You were warned.")
+          window.alert("But you kept going.")
+          window.alert("Why?")
+        }
+      , 2000)
     }
   }
 }
