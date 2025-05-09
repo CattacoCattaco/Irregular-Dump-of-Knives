@@ -58,9 +58,9 @@ var randomButtonLevels = [
   ], //Level 0
   [
     ["Change text color", function() {changeTextColor()}],
-    ["Make seven buttons", function() {for(i = 0; i < 7; i++){makeButton()}}],
+    ["Make 7 buttons", function() {for(i = 0; i < 7; i++){makeButton()}}],
     ["Play RPS", function() {playRps()}],
-    ["Make three words", function() {for(i = 0; i < 3; i++){makeText()}}],
+    ["Make 3 words", function() {for(i = 0; i < 3; i++){makeText()}}],
     ["Make me a name", function() {makeName()}],
     ["Make me a triangle", function() {makeTriangle()}],
     ["What are eggs?", function() {defineEgg()}],
@@ -68,8 +68,8 @@ var randomButtonLevels = [
   [
     ["Change button color", function() {changeButtonColor()}],
     ["Change button text color", function() {changeButtonTextColor()}],
-    ["Make ten eggs", function() {for(i = 0; i < 10; i++){makeEgg()}}],
-    ["Make five names", function() {for(i = 0; i < 5; i++){makeName()}}],
+    ["Make 10 eggs", function() {for(i = 0; i < 10; i++){makeEgg()}}],
+    ["Make 5 names", function() {for(i = 0; i < 5; i++){makeName()}}],
     ["Choose rock, paper, or scissors five times", function() {for(i = 0; i < 5; i++){makeRps()}}],
     ["Make me a line", function() {makeLine()}],
   ], //Level 2
@@ -101,16 +101,15 @@ var randomButtonLevels = [
     ["Why?", function() {why()}, true],
   ], //Level 8
   [
-    ["Make a dozen eggs", function() {for(i = 0; i < 12; i++){makeEgg()}}],
+    ["Make two dozen eggs", function() {for(i = 0; i < 24; i++){makeEgg()}}],
     ["Name three dozen eggs", function() {for(i = 0; i < 36; i++){nameEgg()}}],
     ["Make 2 buttons", function() {for(i = 0; i < 2; i++){makeButton()}}],
-    ["Make 39 buttons annoyingly", function() {for(i = 0; i < 39; i++){makeButton(); window.alert("Hi!"); window.alert("Are we there yet?");}}],
-    ["Make me five shape buttons", function() {for(i = 0; i < 5; i++){makeShapeButton()}}],
+    ["Make 39 buttons annoyingly", function() {for(i = 0; i < 39; i++){makeButton(); window.alert("Are we there yet?");}}],
+    ["Make me 5 shape buttons", function() {for(i = 0; i < 5; i++){makeShapeButton()}}],
     ["Make 13 words", function() {for(i = 0; i < 13; i++){makeText()}}],
     ["Make me a name", function() {makeName()}],
-    ["Play RPS", function() {playRps()}],
-    ["Play 100 games of RPS", function() {for(i = 0; i < 100; i++){playRps()}}],
-    ["Choose rock, paper, or scissors four times", function() {for(i = 0; i < 4; i++){makeRps()}}],
+    ["Play 1000 games of RPS", function() {for(i = 0; i < 1000; i++){playRps()}}],
+    ["Choose rock, paper, or scissors 4 times", function() {for(i = 0; i < 4; i++){makeRps()}}],
     ["Make me a button ", function() {makeButton()}, true],
     ["Do nothing", function() {}],
     ["Do nothing", function() {}],
@@ -301,24 +300,28 @@ function reset()
     do_it = window.confirm("Are you 100% absolutely certain?");
     if(do_it)
     {
-      for(var i in used_ls_keys)
+      do_it = window.confirm("I am begging you. Please don't.");
+      if(do_it)
       {
-        localStorage.removeItem(used_ls_keys[i]);
-      }
-
-      hasReset = true;
-      unlockedButtons = [];
-      currentLevel = 0;
-      newLevel();
-
-      setTimeout(
-        function() 
+        for(var i in used_ls_keys)
         {
-          window.alert("You were warned.")
-          window.alert("But you kept going.")
-          window.alert("Why?")
-        }, 200
-      )
+          localStorage.removeItem(used_ls_keys[i]);
+        }
+
+        hasReset = true;
+        unlockedButtons = [];
+        currentLevel = 0;
+        newLevel();
+
+        setTimeout(
+          function() 
+          {
+            window.alert("You were warned.")
+            window.alert("But you kept going.")
+            window.alert("Why?")
+          }, 200
+        )
+      }
     }
   }
 }
