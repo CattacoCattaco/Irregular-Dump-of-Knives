@@ -111,16 +111,29 @@ var randomButtonLevels = [
     ["Play 1000 games of RPS", function() {for(i = 0; i < 1000; i++){playRps()}}],
     ["Choose rock, paper, or scissors 4 times", function() {for(i = 0; i < 4; i++){makeRps()}}],
     ["Make me a button ", function() {makeButton()}, true],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
-    ["Do nothing", function() {}],
+    ["The warnings", function() {theWarnings()}, true],
+    ["I kept going", function() {keptGoing()}, true],
+    ["Why?", function() {why()}, true],
+    ["Do nothing 1 time", function() {for(i = 0; i < 1; i++){}}],
+    ["Do nothing 2 times", function() {for(i = 0; i < 2; i++){}}],
+    ["Do nothing 3 times", function() {for(i = 0; i < 3; i++){}}],
+    ["Do nothing 4 times", function() {for(i = 0; i < 4; i++){}}],
+    ["Do nothing 5 times", function() {for(i = 0; i < 5; i++){}}],
+    ["Do nothing 6 times", function() {for(i = 0; i < 6; i++){}}],
+    ["Do nothing 7 times", function() {for(i = 0; i < 7; i++){}}],
+    ["Do nothing 8 times", function() {for(i = 0; i < 8; i++){}}],
+    ["Do nothing 9 times", function() {for(i = 0; i < 9; i++){}}],
+    ["Do nothing 10 times", function() {for(i = 0; i < 10; i++){}}],
+    ["Do nothing 11 times", function() {for(i = 0; i < 11; i++){}}],
+    ["Do nothing 12 times", function() {for(i = 0; i < 12; i++){}}],
+    ["Do nothing 13 times", function() {for(i = 0; i < 13; i++){}}],
+    ["Do nothing 14 times", function() {for(i = 0; i < 14; i++){}}],
+    ["Do nothing 15 times", function() {for(i = 0; i < 15; i++){}}],
+    ["Do nothing 16 times", function() {for(i = 0; i < 16; i++){}}],
+    ["Do nothing 17 times", function() {for(i = 0; i < 17; i++){}}],
+    ["Do nothing 18 times", function() {for(i = 0; i < 18; i++){}}],
+    ["Do nothing 19 times", function() {for(i = 0; i < 19; i++){}}],
+    ["Do nothing 20 times", function() {for(i = 0; i < 20; i++){}}],
   ], //Level 9
 ];
 //All buttons that have been unlocked so far
@@ -158,7 +171,7 @@ var collectedEggNames = []
 
 var hasReset = false
 
-var warningsTexts = ["I", "asked", "if you", "wanted to keep going", "I", "checked", "if you were sure", "You said you were", "Was it", "true", "?", "Was I", "wrong", "to have", "let you", "?", "Were you", "wrong", "to have", "gone", "?", "The past", "wasn't meant", "for you", "The present", "was meant", "for you", "But here we are"]
+var warningsTexts = ["I", "asked", "if you", "wanted to keep going", "I", "checked", "if you were sure", "You", "said", "you were", "Was it", "true", "?", "Was I", "wrong", "to have", "let you", "?", "Were you", "wrong", "to have", "gone", "?", "The past", "wasn't meant", "for you", "The present", "was meant", "for you", "But here we are"]
 var goingTexts = ["You", "left", "You", "went", "to the", "past", "You", "let go", "of", "all that you had", "in the", "present", "The", "present", "fell", "apart", "so you", "could", "see the", "past", "You", "are", "destruction", "But", "your", "choices", "weren't", "solely", "yours"]
 var whyTexts = ["Why", "did", "you", "do", "it", "?", "Was", "it", "for", "fame", "?", "Glory", "?", "Power", "?", "Knowledge", "?", "Chaos", "?", "No reason", "at all", "?", "Was", "it", "worth", "the", "cost", "?"]
 
