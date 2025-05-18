@@ -87,6 +87,7 @@ var randomButtonLevels = [
   ], //Level 4
   [
     ["R  e  s  e  t", function() {reset()}, true],
+    ["Play 50 games of RPS", function() {for(i = 0; i < 50; i++){playRps()}}],
   ], //Level 5
   [
     ["Name a dozen eggs", function() {for(i = 0; i < 12; i++){nameEgg()}}],
@@ -105,10 +106,14 @@ var randomButtonLevels = [
     ["Name three dozen eggs", function() {for(i = 0; i < 36; i++){nameEgg()}}],
     ["Make 2 buttons", function() {for(i = 0; i < 2; i++){makeButton()}}],
     ["Make 39 buttons annoyingly", function() {for(i = 0; i < 39; i++){makeButton(); window.alert("Are we there yet?");}}],
+    ["Make me a square", function() {makeSquare()}],
+    ["Make me a triangle", function() {makeTriangle()}],
+    ["Make me a line", function() {makeLine()}],
+    ["Make me a polygon", function() {makePolygon()}],
     ["Make me 5 shape buttons", function() {for(i = 0; i < 5; i++){makeShapeButton()}}],
     ["Make 13 words", function() {for(i = 0; i < 13; i++){makeText()}}],
     ["Make me a name", function() {makeName()}],
-    ["Play 1000 games of RPS", function() {for(i = 0; i < 1000; i++){playRps()}}],
+    ["Play 1,000 games of RPS", function() {for(i = 0; i < 1000; i++){playRps()}}],
     ["Choose rock, paper, or scissors 4 times", function() {for(i = 0; i < 4; i++){makeRps()}}],
     ["Make me a button ", function() {makeButton()}, true],
     ["The warnings", function() {theWarnings()}, true],
@@ -135,6 +140,12 @@ var randomButtonLevels = [
     ["Do nothing 19 times", function() {for(i = 0; i < 19; i++){}}],
     ["Do nothing 20 times", function() {for(i = 0; i < 20; i++){}}],
   ], //Level 9
+  [
+    ["Make a dozen dozens of eggs", function() {for(i = 0; i < 144; i++){makeEgg()}}],
+    ["Make so many lines", function() {for(i = 0; i < Math.ceil(Math.random() * 300) * 300; i++){makeLine()}}],
+    ["Play 10,000 games of RPS", function() {for(i = 0; i < 10000; i++){playRps()}}],
+    ["Make me a button again", function() {makeButton()}, true],
+  ], //Level 10
 ];
 //All buttons that have been unlocked so far
 var unlockedButtons = [];
@@ -199,27 +210,6 @@ const settingsParent = document.getElementById("settings-parent");
 const buttonArea = document.getElementById("button-area");
 const randomArea = document.getElementById("randomness-area");
 
-const file_input = document.getElementById("file-input");
-
-const downloadToFile = (content, filename, contentType) => {
-  const a = document.createElement('a');
-  const file = new Blob([content], { type: contentType });
-
-  a.href = URL.createObjectURL(file);
-  a.download = filename;
-  a.click();
-
-  URL.revokeObjectURL(a.href);
-};
-
-var selectedFile;
-
-// get the value every time the user selects a new file
-file_input.addEventListener("change", (e) => {
-  // e.target points to the input element
-  selectedFile = e.target.files[0]
-})
-
 const used_ls_keys = [
   "IDoK_current_level",
   "IDoK_buttons_made",
@@ -247,7 +237,7 @@ window.onload = newLevel(false)
 
 function newLevel(ascending = true, noButtons = false)
 {
-  loaded = false
+  loaded = false;
 
   root.style.setProperty('--background-color', defaultBackgroundColor);
   root.style.setProperty('--text-color', defaultTextColor);
@@ -257,8 +247,18 @@ function newLevel(ascending = true, noButtons = false)
 
   if(currentLevel == 9)
   {
-    window.alert(the_speech)
+    window.alert(the_speech);
     unlockedButtons = [];
+  }
+  else if(currentLevel == 10)
+  {
+    for(var i = 0; i < 8; i++)
+    {
+      for(var j in randomButtonLevels[i])
+      {
+        unlockedButtons.push(randomButtonLevels[i][j]);
+      }
+    }
   }
 
   for(var i in randomButtonLevels[currentLevel])
@@ -377,7 +377,7 @@ function loadFromBrowser()
 {
   currentLevel = JSON.parse(localStorage.getItem("IDoK_current_level"));
 
-  unlockedButtons = []
+  unlockedButtons = [];
 
   for(var i = 0; i <= currentLevel; i++)
   {
@@ -385,6 +385,11 @@ function loadFromBrowser()
     {
       unlockedButtons.push(randomButtonLevels[i][j]);
     }
+  }
+
+  if(currentLevel == 9)
+  {
+    unlockedButtons = randomButtonLevels[9];
   }
 
   var buttonsMadeNames
@@ -461,37 +466,9 @@ function loadFromBrowser()
 
 function saveToFile()
 {
-  var buttonsMadeNames = []
-  for(var button in buttonsMade)
-  {
-    button = buttonsMade[button]
-    buttonsMadeNames.push(button[0])
-  }
+  saveToBrowser();
   
-  // Data which will be written in a file.
-  var data = (
-      JSON.stringify(currentLevel) + "\n" +
-      JSON.stringify(buttonsMadeNames) + "\n" +
-      JSON.stringify(createdButtonCount) + "\n" +
-      JSON.stringify(createdTextCount) + "\n" +
-      JSON.stringify(buttonTypesMade) + "\n" +
-      randomArea.innerHTML + "\n" +
-      JSON.stringify(rpsWinCount) + "\n" +
-      JSON.stringify(rpsTieCount) + "\n" +
-      JSON.stringify(rpsLossCount) + "\n" +
-      JSON.stringify(customEggs) + "\n" +
-      JSON.stringify(collectedEggs) + "\n" +
-      JSON.stringify(collectedEggNames) + "\n" +
-      root.style.getPropertyValue('--background-color') + "\n" +
-      root.style.getPropertyValue('--text-color') + "\n" +
-      root.style.getPropertyValue('--button-color') + "\n" +
-      root.style.getPropertyValue('--button-text-color') + "\n" +
-      root.style.getPropertyValue('--ominous-color') + "\n" +
-      JSON.stringify(hasReset)
-  );
-
-  // Write data in 'Irregular_dump_of_knives_save.txt'
-  downloadToFile(data, 'Irregular_dump_of_knives_save.txt', 'text/plain')
+  saveAllDataToFile();
 }
 
 function loadFromFile()
@@ -503,92 +480,7 @@ function loadFromFile()
 
   loaded = false;
 
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    // e.target points to the reader
-    const textContent = e.target.result
-    var data = textContent.split("\n");
-
-    currentLevel = JSON.parse(data[0]);
-
-    unlockedButtons = [];
-  
-    for(var i = 0; i <= currentLevel; i++)
-    {
-      for(var j in randomButtonLevels[i])
-      {
-        unlockedButtons.push(randomButtonLevels[i][j]);
-      }
-    }
-
-    var buttonsMadeNames = JSON.parse(data[1]);
-    buttonsMade = [];
-    buttonArea.innerHTML = "";
-
-    for(var name in buttonsMadeNames)
-    {
-      name = buttonsMadeNames[name];
-
-      if(name == makeSingleButtonButtonData[0])
-      {
-        makeButton(makeSingleButtonButtonData);
-      }
-      else if(name == ascendButtonData[0])
-      {
-        makeButton(ascendButtonData);
-      }
-      else
-      {
-        for(var button in unlockedButtons)
-        {
-          button = unlockedButtons[button]
-
-          if(button[0] == name)
-          {
-            makeButton(button);
-            break;
-          }
-        }
-      }
-    }
-
-    createdButtonCount = JSON.parse(data[2]);
-    createdTextCount = JSON.parse(data[3]);
-    buttonTypesMade = JSON.parse(data[4]);
-    randomArea.innerHTML = data[5];
-
-    rpsWinCount = JSON.parse(data[6]);
-    rpsTieCount = JSON.parse(data[7]);
-    rpsLossCount = JSON.parse(data[8]);
-
-    customEggs = JSON.parse(data[9]);
-    collectedEggs = JSON.parse(data[10]);
-    collectedEggNames = JSON.parse(data[11]);
-
-    root.style.setProperty('--background-color', data[12]);
-    root.style.setProperty('--text-color', data[13]);
-    root.style.setProperty('--button-color', data[14]);
-    root.style.setProperty('--button-text-color', data[15]);
-    root.style.setProperty('--ominous-color', data[16]);
-
-    hasReset = JSON.parse(data[17] || false)
-
-    updateTopBarElements();
-    
-    updateTopBar();
-    
-    console.log(`The content of ${selectedFile.name} is ${textContent}`)
-
-    saveToBrowser();
-    loaded = true;
-  }
-
-  reader.onerror = (e) => {
-    const error = e.target.error
-    console.error(`Error occured while reading ${file.name}`, error)
-  }
-
-  reader.readAsText(selectedFile);
+  loadAllDataFromFile(loadFromBrowser);
 }
 
 function updateTopBarElements()
@@ -972,11 +864,16 @@ function playRps()
   var player_choice
   while(!rps.includes(player_choice))
   {
-    player_choice = window.prompt("Choose rock, paper, or scissors").toLowerCase()
+    player_choice = window.prompt("Choose rock, paper, or scissors")
 
-    if(player_choice in rpsLetters)
+    if(player_choice !== null)
     {
-      player_choice = rpsLetters[player_choice]
+      player_choice = player_choice.toLowerCase()
+
+      if(player_choice in rpsLetters)
+      {
+        player_choice = rpsLetters[player_choice]
+      }
     }
   }
 
