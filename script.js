@@ -473,8 +473,6 @@ function saveToFile()
 
 function loadFromFile()
 {
-  if (!selectedFile) return;
-
   localStorage.clear();
   newLevel(false, true);
 
